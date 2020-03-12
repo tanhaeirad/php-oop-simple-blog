@@ -2,6 +2,7 @@
 require_once __DIR__ . "/../bootstrap/autoload.php";
 
 if (!isAdmin()) {
+    $_FLASH->error('شما دسترسی لازم برای ورود به این بخش را ندارید');
     redirect('/');
 }
 

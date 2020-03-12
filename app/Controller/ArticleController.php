@@ -41,17 +41,25 @@ class ArticleController extends Controller
 
     public function delete()
     {
-        $article = (new Article())->find('id', request('id'));
+        $id = $_GET['id'];
 
-        if(!$this->hasAccess($article)){
-            $this->flash->error("شما دسترسی برای حذف مقاله {$article->title} را ندارید");
-            redirect('/admin');
+        if (!isset($id)) {
+            $this->flash->error('هیچ مقاله‌ای برای حذف انتخاب نشده است');
+            redirect('/admin/index.php');
         }
+        $article = (new Article())->find('id', request('id'));
 
         if (!$article) {
             $this->flash->error('چنین مقاله‌ای یافت نشد');
             redirect('/admin');
         }
+
+        if (!$this->hasAccess($article)) {
+            $this->flash->error("شما دسترسی برای حذف مقاله {$article->title} را ندارید");
+            redirect('/admin');
+        }
+
+
         $title = $article->title;
         (new Article())->delete(request('id'));
         $this->flash->error("مقاله {$title} حذف شد");
@@ -77,8 +85,8 @@ class ArticleController extends Controller
 
     public function update($articleId)
     {
-        $article = (new Article())->find('id',$articleId);
-        if(!$this->hasAccess($article)){
+        $article = (new Article())->find('id', $articleId);
+        if (!$this->hasAccess($article)) {
             $this->flash->error("شما دسترسی برای ویرایش مقاله {$article->title} را ندارید");
             redirect('/admin');
         }
@@ -105,7 +113,7 @@ class ArticleController extends Controller
     public function hasAccess($article)
     {
         $user = Auth::user();
-        return $article->article_id == $user->id;
+        return $article->user_id == $user->id;
     }
 
 }
