@@ -13,8 +13,8 @@
   },
   "require": {
     "ext-pdo": "*",
-    "nesbot/carbon": "^2.31",
-    "highideas/laravel-users-online": "^3.0"
+    "plasticbrain/php-flash-messages": "^1.0",
+    "nesbot/carbon": "^2.31"
   },
   "license": "MIT"
 
